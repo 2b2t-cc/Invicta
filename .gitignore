@@ -1,9 +1,6 @@
 .gradle
 /build/
 
-# Ignore Gradle GUI config
-gradle-app.setting
-
 # Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
 !gradle-wrapper.jar
 
@@ -12,3 +9,10 @@ gradle-app.setting
 
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties
+
+# IntelliJ files
+.idea/
+*.iml
+
+# Compiled Binaries
+*.jar

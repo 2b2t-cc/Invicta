@@ -1,0 +1,16 @@
+[
+	{
+		"modid": "cclient",
+		"name": "CClient",
+		"description": "injection point type '%s'",
+		"version": "${version}",
+		"mcversion": "${mcversion}",
+		"url": "2b2t.info",
+		"updateUrl": "",
+		"authorList": [],
+		"credits": "",
+		"logoFile": "",
+		"screenshots": [],
+		"dependencies": []
+	}
+]
