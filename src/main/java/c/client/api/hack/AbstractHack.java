@@ -21,7 +21,7 @@ public abstract class AbstractHack
 	private Value<Boolean> enabled;
 	private Value<Key> keyBind;
 	
-	public AbstractHack(String name)
+	public AbstractHack()
 	{
 		Hack annotation = this.getClass().getAnnotation(Hack.class);
 		Objects.requireNonNull(annotation, 					"Annotation was missing");
@@ -34,6 +34,21 @@ public abstract class AbstractHack
 		this.category = annotation.category();
 	}
 	
+	public String getName()
+	{
+		return this.name;
+	}
+	
+	public String getDescription()
+	{
+		return this.description;
+	}
+	
+	public HackCategory getCategory()
+	{
+		return this.category;
+	}
+	
 	@Retention(RetentionPolicy.RUNTIME)
 	@Target(ElementType.TYPE)
 	public @interface Hack
@@ -42,5 +57,4 @@ public abstract class AbstractHack
 		@Nonnull String description();
 		@Nonnull HackCategory category();
 	}
-	
 }
