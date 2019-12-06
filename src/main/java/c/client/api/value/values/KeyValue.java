@@ -1,14 +1,14 @@
 package c.client.api.value.values;
 
-import c.client.api.value.Value;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import org.lwjgl.input.Keyboard;
+import c.client.api.util.keys.Key;
+
+import javax.annotation.Nullable;
 
 /**
  * @author cookiedragon234 06/Dec/2019
  */
-public class KeyValue extends NumberValue<Integer>
+public class KeyValue extends EnumValue<Key>
 {
 	public KeyValue(String name)
 	{
@@ -17,33 +17,32 @@ public class KeyValue extends NumberValue<Integer>
 	
 	public KeyValue(String name, String defaultValue)
 	{
-		this(name, Keyboard.getKeyIndex(defaultValue));
+		this(name, Key.fromName(defaultValue));
 	}
 	
 	public KeyValue(String name, int defaultValue)
 	{
-		super(name, defaultValue);
+		this(name, Key.fromCode(defaultValue));
 	}
 	
-	@Override
-	public JsonObject addToObject(JsonObject jsonObject)
+	public KeyValue(String name, Key defaultKey)
 	{
-		jsonObject.addProperty(this.getName(), Keyboard.getKeyName(this.getValue().intValue()));
-		return jsonObject;
+		super(name, defaultKey);
 	}
 	
-	@Override
-	public void retrieveFromObject(JsonObject jsonObject)
+	public boolean isKeyDown()
 	{
-		if(jsonObject.has(this.getName()))
-		{
-			JsonElement element = jsonObject.get(this.getName());
-			
-			try
-			{
-				this.setValue(element.getAsNumber());
-			}
-			catch(Exception ignored){}
-		}
+		return this.getEnumVal().isKeyDown();
+	}
+	
+	public boolean hasChangedState()
+	{
+		return this.getEnumVal().hasChangedState();
+	}
+	
+	@Nullable
+	public Boolean hasBeenPressed()
+	{
+		return this.getEnumVal().hasBeenPressed();
 	}
 }
