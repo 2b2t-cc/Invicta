@@ -2,6 +2,8 @@ package c.client.api.hack;
 
 import c.client.api.util.keys.Key;
 import c.client.api.value.Value;
+import c.client.api.value.values.BooleanValue;
+import c.client.api.value.values.KeyValue;
 
 import javax.annotation.Nonnull;
 import java.lang.annotation.ElementType;
@@ -18,8 +20,8 @@ public abstract class AbstractHack
 	protected final String name;
 	protected final String description;
 	protected final HackCategory category;
-	private Value<Boolean> enabled;
-	private Value<Key> keyBind;
+	private Value<Boolean> enabled = new BooleanValue("Enabled", false);
+	private KeyValue keyBind = new KeyValue("Bind");
 	
 	public AbstractHack()
 	{
@@ -32,7 +34,18 @@ public abstract class AbstractHack
 		this.name = annotation.name();
 		this.description = annotation.description();
 		this.category = annotation.category();
+		
+		enabled.addCallback((oldVal, newVal) ->
+		{
+			if(newVal)
+				onEnabled();
+			else
+				onDisabled();
+		});
 	}
+	
+	protected void onEnabled(){}
+	protected void onDisabled(){}
 	
 	public String getName()
 	{
