@@ -1,13 +1,16 @@
 package c.client.api.value;
 
+import c.client.api.ISerializable;
+import com.google.gson.JsonObject;
+
 /**
  * @author cookiedragon234 06/Dec/2019
  */
-public abstract class Value<T>
+public abstract class Value<T> implements ISerializable
 {
-	private final String name;
-	private final T defaultVal;
-	private T value;
+	protected final String name;
+	protected final T defaultVal;
+	protected T value;
 	
 	public Value(String name, T defaultVal)
 	{
@@ -33,5 +36,11 @@ public abstract class Value<T>
 	public void setValue(T value)
 	{
 		this.value = value;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return String.format("%s:%s:%s", this.name, this.value.getClass().getName(), this.value);
 	}
 }
