@@ -1,5 +1,7 @@
 package c.client.impl.launch;
 
+import c.client.impl.hack.HackManager;
+
 public class ClientLaunchImpl
 {
 	public static final String MOD_ID = "cclient";
@@ -13,7 +15,7 @@ public class ClientLaunchImpl
 	
 	public static void init()
 	{
-	
+		HackManager.init();
 	}
 	
 	public static void postInit()
