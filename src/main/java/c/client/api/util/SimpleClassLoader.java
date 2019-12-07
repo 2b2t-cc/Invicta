@@ -16,13 +16,11 @@ public class SimpleClassLoader<T>
 	}
 	
 	private Class<? extends T>[] clazzes;
-	private Set<Class<? extends T>> erroredClasses;
 	
 	@SafeVarargs
 	public final SimpleClassLoader<T> build(Class<? extends T>... clazzes)
 	{
 		this.clazzes = clazzes;
-		this.erroredClasses = new HashSet<>(clazzes.length);
 		return this;
 	}
 	
@@ -46,10 +44,5 @@ public class SimpleClassLoader<T>
 		}
 		
 		return this;
-	}
-	
-	public Set<Class<? extends T>> getErroredClasses()
-	{
-		return erroredClasses;
 	}
 }
