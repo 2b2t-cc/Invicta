@@ -1,7 +1,5 @@
 package c.client.api.event;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.*;
 
 /**
@@ -12,6 +10,10 @@ public class EventDispatcher
 	private static final Map<Class<? extends AbstractEvent>, Set<SubscribingMethod>> subscriptions = new HashMap<>();
 	
 	/**
+	 * This will index the given class, searching it for methods that subscribe to events. This will **NOT**
+	 * subscribe the class to receive events. In order to that you need to, well, subscribe it! Just use the
+	 * subscribe function and pass the same class.
+	 *
 	 * @param subscriber An initialised class containing methods to be subscribed
 	 */
 	public static void register(Object subscriber)
@@ -42,6 +44,12 @@ public class EventDispatcher
 		}
 	}
 	
+	/**
+	 * Subscribes the given class, meaning that it's methods will be eligible to recieve events.
+	 * You **MUST** register the class before subscribing it.
+	 *
+	 * @param subscriber The class to subscribe
+	 */
 	public static void subscribe(Object subscriber)
 	{
 		for(Set<SubscribingMethod> subscribingMethods : subscriptions.values())
@@ -56,6 +64,11 @@ public class EventDispatcher
 		}
 	}
 	
+	/**
+	 * Unsubscribe the class, therefore making it ineligible to receive events.
+	 *
+	 * @param subscriber The class to subscribe
+	 */
 	public static void unsubscribe(Subscriber subscriber)
 	{
 		for(Set<SubscribingMethod> subscribingMethods : subscriptions.values())
@@ -70,6 +83,12 @@ public class EventDispatcher
 		}
 	}
 	
+	/**
+	 * Dispatches the given event to all the methods that subscribe to it
+	 *
+	 * @param event The event to dispatch
+	 * @return The event that was dispatched
+	 */
 	public static AbstractEvent dispatch(AbstractEvent event)
 	{
 		Iterator<SubscribingMethod> iterator = subscriptions.get(event.getClass()).iterator();
@@ -90,19 +109,4 @@ public class EventDispatcher
 		}
 		return event;
 	}
-}
-
-class SubscribingMethod
-{
-	public SubscribingMethod(Object instance, Class<? extends AbstractEvent> event, Method method)
-	{
-		this.instance = instance;
-		this.event = event;
-		this.method = method;
-	}
-	
-	final Object instance;
-	final Class<? extends AbstractEvent> event;
-	final Method method;
-	boolean active = true;
 }

@@ -25,11 +25,19 @@ public abstract class AbstractEvent
 		this.isCancellable = hasCancellableAnnotation();
 	}
 	
+	/**
+	 * @return true if this event has been cancelled. This means that it will not be received by future subscribers
+	 * and may also affect the logic that posted the event
+	 */
 	public boolean isCancelled()
 	{
 		return this.isCancelled;
 	}
 	
+	/**
+	 * @param isCancelled whether this event is cancelled. This means that it will not be received by future subscribers
+	 * and may also affect the logic that posted the event
+	 */
 	public void setCancelled(boolean isCancelled)
 	{
 		if(!isCancellable)
@@ -39,7 +47,9 @@ public abstract class AbstractEvent
 	}
 	
 	
-	
+	/**
+	 * @return true if this class has an {@code @Cancellable} annotation, indicating it can be cancelled
+	 */
 	protected final boolean hasCancellableAnnotation()
 	{
 		try

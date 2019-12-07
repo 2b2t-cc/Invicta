@@ -1,5 +1,6 @@
 package c.client.api.command;
 
+import c.client.api.event.EventDispatcher;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
@@ -8,8 +9,13 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
  */
 public abstract class AbstractCommand
 {
-	public abstract String getName();
+	public AbstractCommand()
+	{
+		EventDispatcher.register(this);
+		EventDispatcher.subscribe(this);
+	}
 	
+	public abstract String getName();
 	public abstract void init(CommandDispatcher dispatcher);
 	
 	protected static void register(CommandDispatcher dispatcher, LiteralArgumentBuilder... arguments)

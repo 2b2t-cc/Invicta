@@ -2,6 +2,7 @@ package c.client.impl.command;
 
 import c.client.api.command.AbstractCommand;
 import c.client.api.command.RootCommandProvider;
+import c.client.api.event.EventDispatcher;
 import c.client.api.util.SimpleClassLoader;
 import c.client.impl.command.commands.FriendCommand;
 import com.mojang.brigadier.CommandDispatcher;
