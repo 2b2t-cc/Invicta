@@ -3,8 +3,6 @@ package c.client.impl.command.commands;
 import c.client.api.command.AbstractCommand;
 import c.client.api.command.utils.EntitySuggestor;
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.arguments.StringArgumentType;
-import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 
 import static com.mojang.brigadier.arguments.StringArgumentType.*;
 
@@ -52,5 +50,11 @@ public class FriendCommand extends AbstractCommand
 	{
 		System.out.println("Added friend  " + name);
 		return 1;
+	}
+	
+	@Override
+	public void onEvent(Test1 event)
+	{
+	
 	}
 }

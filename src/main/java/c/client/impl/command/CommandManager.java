@@ -32,13 +32,8 @@ public class CommandManager
 			.initialise(
 				cmd -> commands.add(cmd),
 				cmd -> {},
-				(cmd, e) -> new RuntimeException("Failed to initialise command '" + cmd.getName() + "'", e)
+				(cmd, e) -> new RuntimeException(String.format("Failed to initialise command '%s'", cmd.getName()), e)
 			);
-	}
-	
-	public static void register(AbstractCommand command)
-	{
-	
 	}
 	
 	public static void execute(String command) throws CommandSyntaxException
