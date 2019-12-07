@@ -40,7 +40,7 @@ public class SimpleClassLoader<T>
 			}
 			catch(Exception e)
 			{
-				uncessfullInitialisationCallback.accept(clazz);
+				unsucessfullInitialisationCallback.accept(clazz);
 				throwableOnErrorSupplier.apply(clazz, e).printStackTrace();
 			}
 		}
