@@ -17,6 +17,12 @@ import static com.mojang.brigadier.builder.RequiredArgumentBuilder.argument;
 public class FriendCommand extends AbstractCommand
 {
 	@Override
+	public String getName()
+	{
+		return "Friend";
+	}
+	
+	@Override
 	public void init(CommandDispatcher dispatcher)
 	{
 		register(

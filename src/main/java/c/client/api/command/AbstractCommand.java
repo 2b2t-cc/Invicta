@@ -8,6 +8,8 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
  */
 public abstract class AbstractCommand
 {
+	public abstract String getName();
+	
 	public abstract void init(CommandDispatcher dispatcher);
 	
 	protected static void register(CommandDispatcher dispatcher, LiteralArgumentBuilder... arguments)
