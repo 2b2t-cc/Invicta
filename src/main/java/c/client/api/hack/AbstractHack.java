@@ -21,7 +21,7 @@ public abstract class AbstractHack
 	protected final String description;
 	protected final HackCategory category;
 	private Value<Boolean> enabled = new BooleanValue("Enabled", false);
-	private KeyValue keyBind = new KeyValue("Bind");
+	private Value<Key> keyBind = new KeyValue("Bind");
 	
 	public AbstractHack()
 	{

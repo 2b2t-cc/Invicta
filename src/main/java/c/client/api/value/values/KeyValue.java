@@ -1,14 +1,18 @@
 package c.client.api.value.values;
 
+import c.client.api.value.Value;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import org.lwjgl.input.Keyboard;
 import c.client.api.util.keys.Key;
 
 import javax.annotation.Nullable;
+import java.util.Objects;
 
 /**
  * @author cookiedragon234 06/Dec/2019
  */
-public class KeyValue extends EnumValue<Key>
+public class KeyValue extends Value<Key>
 {
 	public KeyValue(String name)
 	{
@@ -32,17 +36,39 @@ public class KeyValue extends EnumValue<Key>
 	
 	public boolean isKeyDown()
 	{
-		return this.getEnumVal().isKeyDown();
+		return this.getValue().isKeyDown();
 	}
 	
 	public boolean hasChangedState()
 	{
-		return this.getEnumVal().hasChangedState();
+		return this.getValue().hasChangedState();
 	}
 	
 	@Nullable
 	public Boolean hasBeenPressed()
 	{
-		return this.getEnumVal().hasBeenPressed();
+		return this.getValue().hasBeenPressed();
+	}
+	
+	@Override
+	public JsonObject addToObject(JsonObject jsonObject)
+	{
+		jsonObject.addProperty(this.getName(), this.getValue().name());
+		return jsonObject;
+	}
+	
+	@Override
+	public void retrieveFromObject(JsonObject jsonObject)
+	{
+		if(jsonObject.has(this.getName()))
+		{
+			JsonElement element = jsonObject.get(this.getName());
+			
+			try
+			{
+				this.setValue(Key.fromName(element.getAsString()));
+			}
+			catch(Exception ignored){}
+		}
 	}
 }
