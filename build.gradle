@@ -32,9 +32,13 @@ minecraft {
 
 repositories {
 	mavenCentral()
+	maven {
+		url = "https://libraries.minecraft.net"
+	}
 }
 
 dependencies {
+	compile 'com.mojang:brigadier:1.0.17'
 }
 
 processResources {
