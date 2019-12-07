@@ -17,6 +17,11 @@ public class SimpleClassLoader<T>
 	
 	private Class<? extends T>[] clazzes;
 	
+	/**
+	 * Loads the classloader with the given class types
+	 * @param clazzes Class types to initialise
+	 * @return This class loader
+	 */
 	@SafeVarargs
 	public final SimpleClassLoader<T> build(Class<? extends T>... clazzes)
 	{
@@ -24,9 +29,16 @@ public class SimpleClassLoader<T>
 		return this;
 	}
 	
+	/**
+	 * Initialises all the classes in this class loader
+	 * @param successfulInitialisationCallback Called for each class upon successful initialisation
+	 * @param unsuccessfulInitialisationCallback Called for each class upon unsuccessful initialisation
+	 * @param throwableOnErrorSupplier Retrieves a throwable to throw upon unsuccessful initialisation
+	 * @return This class loader
+	 */
 	public SimpleClassLoader<T> initialise(
 		Consumer<T> successfulInitialisationCallback,
-		Consumer<Class<? extends T>> unsucessfullInitialisationCallback,
+		Consumer<Class<? extends T>> unsuccessfulInitialisationCallback,
 		BiFunction<Class<? extends T>, Throwable, Throwable> throwableOnErrorSupplier
 	)
 	{
@@ -38,7 +50,7 @@ public class SimpleClassLoader<T>
 			}
 			catch(Exception e)
 			{
-				unsucessfullInitialisationCallback.accept(clazz);
+				unsuccessfulInitialisationCallback.accept(clazz);
 				throwableOnErrorSupplier.apply(clazz, e).printStackTrace();
 			}
 		}

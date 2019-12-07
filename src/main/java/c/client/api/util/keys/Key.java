@@ -6,17 +6,19 @@ import javax.annotation.Nullable;
 import java.util.Arrays;
 
 /**
- * lwjgl keycodes in an enum
- * in case you need to update, take the fields from the {@link org.lwjgl.input.Keyboard} class and use the following regex:
- * {@code <code>([a-zA-Z_0-9]+)[ ]{3,}= ([a-zA-Z0-9_]+);[ ]*([\/\* a-zA-Z0-9\=\-\+\.\/\*\,\(\)]+)*</code>}
- * replace to:
- * {@code <code>$1\($2\)\,\t\t\t$3</code>}
- * https://regexr.com/4qa0l
+ * <p>lwjgl keycodes in an enum</p>
+ *
+ * <p>in case you need to update, take the fields from the {@link org.lwjgl.input.Keyboard} class and use the following regex:</p>
+ * <pre>{@code ([a-zA-Z_0-9]+)[ ]{3,}= ([a-zA-Z0-9_]+);[ ]*([\/\* a-zA-Z0-9\=\-\+\.\/\*\,\(\)]+)*}</pre>
+ * <p>replace to:</p>
+ * <pre>{@code $1\($2\)\,\t\t\t$3}</pre>
+ * @see <a href="https://regexr.com/4qa0l">https://regexr.com/4qa0l</a>
  * @author cookiedragon234 06/Dec/2019
  */
 @SuppressWarnings({"SpellCheckingInspection", "unused"})
 public enum Key
 {
+	// TODO: Convert comments at end of line to javadocs before the enum declaration
 	KEY_NONE(0x00),
 	
 	KEY_ESCAPE(0x01),

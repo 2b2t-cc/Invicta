@@ -1,0 +1,16 @@
+c.client.api
+c.client.api.command
+c.client.api.command.utils
+c.client.api.event
+c.client.api.hack
+c.client.api.util
+c.client.api.util.keys
+c.client.api.value
+c.client.api.value.values
+c.client.impl.command
+c.client.impl.command.commands
+c.client.impl.hack
+c.client.impl.hack.hacks.example
+c.client.impl.launch
+c.client.impl.launch.forge
+c.client.impl.mixin

@@ -47,7 +47,19 @@ public abstract class AbstractHack
 	protected void onEnabled(){}
 	protected void onDisabled(){}
 	
+	/**
+	 * @return A user friendly name for this hack
+	 */
 	public String getName()
+	{
+		return this.name;
+	}
+	
+	/**
+	 * Used by guis etc to show extra metadata with the name
+	 * @return The name with optional added metadata
+	 */
+	public String getNameWithMetadata()
 	{
 		return this.name;
 	}
