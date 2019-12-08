@@ -1,5 +1,6 @@
 package com.invicta.api.event;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -21,15 +22,8 @@ class SubscribingMethod
 	final Method method;
 	boolean active = true;
 	
-	public void invoke(Object arg)
+	public void invoke(Object arg) throws InvocationTargetException, IllegalAccessException
 	{
-		try
-		{
-			method.invoke(this.instance, arg);
-		}
-		catch(Exception e)
-		{
-			throw new RuntimeException("Failed to post event", e);
-		}
+		method.invoke(this.instance, arg);
 	}
 }
