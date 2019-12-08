@@ -1,13 +1,19 @@
 package com.invicta.api.event;
 
-import com.google.common.collect.Sets;
-import com.google.common.reflect.TypeToken;
-
 import java.lang.reflect.Method;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * <p>An annotated event bus implementation</p>
+ *
+ * <p>It is designed with the basis that classes are registered once, indexing their methods for potential event subscribers.</p>
+ *
+ * <p>This means the class can be frequently subscribed and unsubscribed with minimal performance impact</p>
+ *
+ * <p>A limitation of this event bus implementation is that subscribed methods cannot be inherited from super classes.
+ * I might add this at a later date</p>
+ *
  * @author cookiedragon234 07/Dec/2019
  */
 public class EventDispatcher

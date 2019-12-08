@@ -2,6 +2,7 @@ com.invicta.api
 com.invicta.api.command
 com.invicta.api.command.utils
 com.invicta.api.event
+com.invicta.api.event.entity
 com.invicta.api.hack
 com.invicta.api.util
 com.invicta.api.util.keys
@@ -14,3 +15,4 @@ com.invicta.impl.hack.hacks.example
 com.invicta.impl.launch
 com.invicta.impl.launch.forge
 com.invicta.impl.mixin
+com.invicta.impl.mixin.mixins.entity
