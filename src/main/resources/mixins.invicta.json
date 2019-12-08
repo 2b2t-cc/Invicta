@@ -1,0 +1,9 @@
+{
+	"required": true,
+	"compatibilityLevel": "JAVA_8",
+	"package": "com.invicta.impl.mixin.mixins",
+	"refmap": "mixins.invicta.refmap.json",
+	"mixins": [
+		"entity.MixinEntityPlayerSP"
+	]
+}
