@@ -1,13 +1,19 @@
 package com.invicta.api.event;
 
+import com.google.common.collect.Sets;
+import com.google.common.reflect.TypeToken;
+
+import java.lang.reflect.Method;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author cookiedragon234 07/Dec/2019
  */
 public class EventDispatcher
 {
-	private static final Map<Class<? extends AbstractEvent>, Set<SubscribingMethod>> subscriptions = new HashMap<>();
+	private static final Map<Class<?>, Set<SubscribingMethod>> subscriptions = new ConcurrentHashMap<>();
+	private static final Set<SubscribingMethod> subscribingMethods = new HashSet<>();
 	
 	/**
 	 * This will index the given class, searching it for methods that subscribe to events. This will **NOT**
@@ -18,29 +24,25 @@ public class EventDispatcher
 	 */
 	public static void register(Object subscriber)
 	{
-		Class clazz = subscriber.getClass();
-		while(clazz != null)
+		Class<?> clazz = subscriber.getClass();
+		
+		for(Method declaredMethod : clazz.getDeclaredMethods())
 		{
-			Arrays.stream(clazz.getDeclaredMethods())
-				.filter(method -> method.isAnnotationPresent(Subscriber.class))
-				.forEach(method ->
-				{
-					if(method.getParameterCount() != 1)
-						throw new IllegalArgumentException(String.format("Incorrect number of parameters for subscribed method '%s'", method.toString()));
-					
-					Class<?> paramType = method.getParameterTypes()[0];
-					if(!(AbstractEvent.class.isInstance(paramType)))
-						throw new IllegalArgumentException(String.format("Arguments did not extend event for subscribed method '%s'", method.toString()));
-					
-					method.setAccessible(true);
-					
-					Class<? extends AbstractEvent> eventType = (Class<? extends AbstractEvent>)paramType;
-					
-					if(!subscriptions.containsKey(paramType))
-						subscriptions.put(eventType, new HashSet<>());
-					
-					subscriptions.get(paramType).add(new SubscribingMethod(subscriber, eventType, method));
-				});
+			if(!declaredMethod.isAnnotationPresent(Subscriber.class))
+				continue;
+			
+			if(declaredMethod.getParameterCount() != 1)
+				throw new RuntimeException(String.format("Registered method '%s' needs only 1 parameter", declaredMethod.toString()));
+			
+			Class<?> eventType = declaredMethod.getParameterTypes()[0];
+			
+			if(!AbstractEvent.class.isAssignableFrom(eventType))
+				throw new RuntimeException(String.format("Registered method '%s' parameter needs to extends AbstractEvent", declaredMethod.toString()));
+			
+			if(!subscriptions.containsKey(eventType))
+				subscriptions.put(eventType, new HashSet<>());
+			
+			subscriptions.get(eventType).add(new SubscribingMethod(subscriber, declaredMethod));
 		}
 	}
 	
@@ -69,7 +71,7 @@ public class EventDispatcher
 	 *
 	 * @param subscriber The class to subscribe
 	 */
-	public static void unsubscribe(Subscriber subscriber)
+	public static void unsubscribe(Object subscriber)
 	{
 		for(Set<SubscribingMethod> subscribingMethods : subscriptions.values())
 		{
@@ -91,21 +93,31 @@ public class EventDispatcher
 	 */
 	public static AbstractEvent dispatch(AbstractEvent event)
 	{
-		Iterator<SubscribingMethod> iterator = subscriptions.get(event.getClass()).iterator();
-		while(iterator.hasNext() && !event.isCancelled())
+		Class eventClass = event.getClass();
+		
+		while(eventClass != null)
 		{
-			SubscribingMethod subscribingMethod = iterator.next();
-			if(subscribingMethod.active)
+			if(!subscriptions.containsKey(eventClass))
+				subscriptions.put(eventClass, new HashSet<>());
+			
+			Iterator<SubscribingMethod> iterator = subscriptions.get(eventClass).iterator();
+			while(iterator.hasNext() && !event.isCancelled())
 			{
-				try
+				SubscribingMethod subscribingMethod = iterator.next();
+				if(subscribingMethod.active)
 				{
-					subscribingMethod.method.invoke(subscribingMethod.instance);
-				}
-				catch(Exception e)
-				{
-					throw new RuntimeException("Error while invoking event '" + event.getClass().getName());
+					try
+					{
+						subscribingMethod.invoke(event);
+					}
+					catch(Exception e)
+					{
+						throw new RuntimeException("Error while invoking event '" + event.getClass().getName(), e);
+					}
 				}
 			}
+			
+			eventClass = eventClass.getSuperclass();
 		}
 		return event;
 	}

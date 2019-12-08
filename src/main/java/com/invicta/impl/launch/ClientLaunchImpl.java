@@ -1,5 +1,6 @@
 package com.invicta.impl.launch;
 
+import com.invicta.impl.command.CommandManager;
 import com.invicta.impl.hack.HackManager;
 
 public class ClientLaunchImpl
@@ -16,6 +17,7 @@ public class ClientLaunchImpl
 	public static void init()
 	{
 		HackManager.init();
+		CommandManager.init();
 	}
 	
 	public static void postInit()

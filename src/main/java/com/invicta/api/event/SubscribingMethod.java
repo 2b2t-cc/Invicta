@@ -9,15 +9,27 @@ import java.lang.reflect.Method;
  */
 class SubscribingMethod
 {
-	public SubscribingMethod(Object instance, Class<? extends AbstractEvent> event, Method method)
+	public SubscribingMethod(Object instance, Method method)
 	{
+		method.setAccessible(true);
+		
 		this.instance = instance;
-		this.event = event;
 		this.method = method;
 	}
 	
 	final Object instance;
-	final Class<? extends AbstractEvent> event;
 	final Method method;
 	boolean active = true;
+	
+	public void invoke(Object arg)
+	{
+		try
+		{
+			method.invoke(this.instance, arg);
+		}
+		catch(Exception e)
+		{
+			throw new RuntimeException("Failed to post event", e);
+		}
+	}
 }

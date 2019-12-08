@@ -2,6 +2,8 @@ package com.invicta.impl.command.commands;
 
 import com.invicta.api.command.AbstractCommand;
 import com.invicta.api.command.utils.EntitySuggestor;
+import com.invicta.api.event.Subscriber;
+import com.invicta.api.event.entity.SendMessageEvent;
 import com.mojang.brigadier.CommandDispatcher;
 
 import static com.mojang.brigadier.arguments.StringArgumentType.*;
@@ -23,6 +25,7 @@ public class FriendCommand extends AbstractCommand
 	@Override
 	public void init(CommandDispatcher dispatcher)
 	{
+		System.out.println("Init friend");
 		register(
 			dispatcher,
 			literal("add")
@@ -38,6 +41,24 @@ public class FriendCommand extends AbstractCommand
 						.executes(c -> removeFriend(getString(c, "player")))
 				)
 		);
+	}
+	
+	@Subscriber
+	private void onChat(SendMessageEvent.Pre event)
+	{
+		System.out.println("Sent message pre event " + event.getMessage());
+	}
+	
+	@Subscriber
+	private void onChat(SendMessageEvent event)
+	{
+		System.out.println("Sent message event " + event.getMessage());
+	}
+	
+	@Subscriber
+	private void onChat(SendMessageEvent.Post event)
+	{
+		System.out.println("Sent message post event " + event.getMessage());
 	}
 	
 	private static int removeFriend(String name)

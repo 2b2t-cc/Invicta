@@ -17,12 +17,6 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 public class ClientForgeLaunch
 {
 	/**
-	 * This is the instance of your mod as created by Forge. It will never be null.
-	 */
-	@Mod.Instance(ClientLaunchImpl.MOD_ID)
-	public static ClientLaunchImpl INSTANCE;
-	
-	/**
 	 * This is the first initialization event. Register tile entities here.
 	 * The registry events below will have fired prior to entry to this method.
 	 */
