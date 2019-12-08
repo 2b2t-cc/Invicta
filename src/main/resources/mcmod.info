@@ -1,13 +1,13 @@
 [
 	{
-		"modid": "cclient",
-		"name": "CClient",
+		"modid": "invicta",
+		"name": "Invicta",
 		"description": "injection point type '%s'",
 		"version": "${version}",
 		"mcversion": "${mcversion}",
 		"url": "2b2t.info",
 		"updateUrl": "",
-		"authorList": [],
+		"authorList": ["cookiedragon234"],
 		"credits": "",
 		"logoFile": "",
 		"screenshots": [],
