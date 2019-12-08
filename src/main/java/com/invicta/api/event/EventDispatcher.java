@@ -19,7 +19,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class EventDispatcher
 {
 	private static final Map<Class<?>, Set<SubscribingMethod>> subscriptions = new ConcurrentHashMap<>();
-	private static final Set<SubscribingMethod> subscribingMethods = new HashSet<>();
 	
 	/**
 	 * This will index the given class, searching it for methods that subscribe to events. This will **NOT**
