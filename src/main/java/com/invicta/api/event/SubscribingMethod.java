@@ -10,14 +10,16 @@ import java.lang.reflect.Method;
  */
 class SubscribingMethod
 {
-	public SubscribingMethod(Object instance, Method method)
+	public SubscribingMethod(Class<?> clazz, Object instance, Method method)
 	{
 		method.setAccessible(true);
 		
+		this.clazz = clazz;
 		this.instance = instance;
 		this.method = method;
 	}
 	
+	final Class<?> clazz;
 	final Object instance;
 	final Method method;
 	boolean active = false;

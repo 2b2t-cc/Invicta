@@ -37,6 +37,7 @@ public class CommandManager
 			);
 		
 		EventDispatcher.register(CommandManager.class);
+		EventDispatcher.subscribe(CommandManager.class);
 	}
 	
 	public static void execute(String command) throws CommandSyntaxException

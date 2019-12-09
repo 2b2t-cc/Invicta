@@ -76,7 +76,27 @@ public class EventDispatcher
 			if(!subscriptions.containsKey(eventType))
 				subscriptions.put(eventType, new HashSet<>());
 			
-			subscriptions.get(eventType).add(new SubscribingMethod(subscriber, declaredMethod));
+			subscriptions.get(eventType).add(new SubscribingMethod(clazz, subscriber, declaredMethod));
+		}
+	}
+	
+	/**
+	 * Subscribes the given class, meaning that it's methods will be eligible to recieve events.
+	 * You **MUST** register the class before subscribing it.
+	 *
+	 * @param subscriber The class to subscribe
+	 */
+	public static void subscribe(Class subscriber)
+	{
+		for(Set<SubscribingMethod> subscribingMethods : subscriptions.values())
+		{
+			for(SubscribingMethod subscribingMethod : subscribingMethods)
+			{
+				if(subscribingMethod.clazz == subscriber)
+				{
+					subscribingMethod.active = true;
+				}
+			}
 		}
 	}
 	
@@ -95,6 +115,25 @@ public class EventDispatcher
 				if(subscribingMethod.instance == subscriber)
 				{
 					subscribingMethod.active = true;
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Unsubscribe the class, therefore making it ineligible to receive events.
+	 *
+	 * @param subscriber The class to subscribe
+	 */
+	public static void unsubscribe(Class subscriber)
+	{
+		for(Set<SubscribingMethod> subscribingMethods : subscriptions.values())
+		{
+			for(SubscribingMethod subscribingMethod : subscribingMethods)
+			{
+				if(subscribingMethod.clazz == subscriber)
+				{
+					subscribingMethod.active = false;
 				}
 			}
 		}
