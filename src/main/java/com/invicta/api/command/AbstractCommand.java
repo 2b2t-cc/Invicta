@@ -3,6 +3,7 @@ package com.invicta.api.command;
 import com.invicta.api.event.EventDispatcher;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.brigadier.tree.CommandNode;
 
 /**
  * A command that can be called by the player in chat
@@ -28,11 +29,11 @@ public abstract class AbstractCommand
 	 */
 	public abstract void init(CommandDispatcher dispatcher);
 	
-	protected static void register(CommandDispatcher dispatcher, LiteralArgumentBuilder... arguments)
+	protected static void register(CommandDispatcher dispatcher, CommandNode... nodes)
 	{
-		for(LiteralArgumentBuilder argument : arguments)
+		for(CommandNode node : nodes)
 		{
-			dispatcher.register(argument);
+			dispatcher.getRoot().addChild(node);
 		}
 	}
 }

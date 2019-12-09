@@ -24,24 +24,31 @@ public class FriendCommand extends AbstractCommand
 		return "Friend";
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void init(CommandDispatcher dispatcher)
 	{
 		System.out.println("Init friend");
 		register(
 			dispatcher,
-			literal("add")
-				.then(
-					argument("player", string())
-						.suggests(new EntitySuggestor())
-						.executes(c -> addFriend(getString(c, "player")))
-				),
-			literal("remove")
-				.then(
-					argument("player", string())
-						.suggests(new EntitySuggestor())
-						.executes(c -> removeFriend(getString(c, "player")))
+			literal("friend")
+			.then(
+				literal("add")
+					.then(
+						argument("player", string())
+							.suggests(new EntitySuggestor())
+							.executes(c -> addFriend(getString(c, "player")))
+					)
 				)
+			.then(
+				literal("remove")
+					.then(
+						argument("player", string())
+							.suggests(new EntitySuggestor())
+							.executes(c -> removeFriend(getString(c, "player")))
+					)
+			)
+			.build()
 		);
 	}
 	
