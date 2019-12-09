@@ -2,6 +2,7 @@ package com.invicta.impl.command;
 
 import com.invicta.api.command.AbstractCommand;
 import com.invicta.api.command.RootCommandProvider;
+import com.invicta.api.event.EventDispatcher;
 import com.invicta.api.util.SimpleClassLoader;
 import com.invicta.impl.command.commands.FriendCommand;
 import com.mojang.brigadier.CommandDispatcher;
@@ -34,6 +35,8 @@ public class CommandManager
 				cmd -> {},
 				(cmd, e) -> new RuntimeException(String.format("Failed to initialise command '%s'", cmd.getName()), e)
 			);
+		
+		EventDispatcher.register(this);
 	}
 	
 	public static void execute(String command) throws CommandSyntaxException

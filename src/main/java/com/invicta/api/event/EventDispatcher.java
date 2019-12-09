@@ -1,6 +1,7 @@
 package com.invicta.api.event;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -29,10 +30,27 @@ public class EventDispatcher
 	 */
 	public static void register(Object subscriber)
 	{
-		Class<?> clazz = subscriber.getClass();
-		
+		register(subscriber, subscriber.getClass());
+	}
+	
+	public static void register(Class clazz)
+	{
+		// We provide null as the subscriber instance because it is indexing static methods and therefore needs no instance to initialise
+		register(null, clazz);
+	}
+	
+	private static void register(Object subscriber, Class clazz)
+	{
 		for(Method declaredMethod : clazz.getDeclaredMethods())
 		{
+			// If we are registering a static class then only allow static methods to be indexed!
+			if(subscriber == null && !Modifier.isStatic(declaredMethod.getModifiers()))
+				continue;
+			
+			// On the other hand, if we are indexing an initialised class then skip static methods!
+			if(subscriber != null && Modifier.isStatic(declaredMethod.getModifiers()))
+				continue;
+			
 			if(!declaredMethod.isAnnotationPresent(Subscriber.class))
 				continue;
 			

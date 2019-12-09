@@ -6,6 +6,8 @@ import com.invicta.api.event.Subscriber;
 import com.invicta.api.event.entity.SendMessageEvent;
 import com.mojang.brigadier.CommandDispatcher;
 
+import java.util.stream.Stream;
+
 import static com.mojang.brigadier.arguments.StringArgumentType.*;
 
 import static com.mojang.brigadier.builder.LiteralArgumentBuilder.literal;
@@ -41,24 +43,6 @@ public class FriendCommand extends AbstractCommand
 						.executes(c -> removeFriend(getString(c, "player")))
 				)
 		);
-	}
-	
-	@Subscriber
-	private void onChat(SendMessageEvent.Pre event)
-	{
-		System.out.println("Sent message pre event " + event.getMessage());
-	}
-	
-	@Subscriber
-	private void onChat(SendMessageEvent event)
-	{
-		System.out.println("Sent message event " + event.getMessage());
-	}
-	
-	@Subscriber
-	private void onChat(SendMessageEvent.Post event)
-	{
-		System.out.println("Sent message post event " + event.getMessage());
 	}
 	
 	private static int removeFriend(String name)
