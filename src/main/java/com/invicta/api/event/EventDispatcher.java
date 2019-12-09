@@ -22,9 +22,11 @@ public class EventDispatcher
 	private static final Map<Class<?>, Set<SubscribingMethod>> subscriptions = new ConcurrentHashMap<>();
 	
 	/**
-	 * This will index the given class, searching it for methods that subscribe to events. This will **NOT**
+	 * <p>This will index the given class, searching it for methods that subscribe to events. This will **NOT**
 	 * subscribe the class to receive events. In order to that you need to, well, subscribe it! Just use the
-	 * subscribe function and pass the same class.
+	 * subscribe function and pass the same class.</p>
+	 *
+	 * <p><b>This will only index non-static methods</b></p>
 	 *
 	 * @param subscriber An initialised class containing methods to be subscribed
 	 */
@@ -33,6 +35,15 @@ public class EventDispatcher
 		register(subscriber, subscriber.getClass());
 	}
 	
+	/**
+	 * <p>This will index the given class, searching it for methods that subscribe to events. This will **NOT**
+	 * subscribe the class to receive events. In order to that you need to, well, subscribe it! Just use the
+	 * subscribe function and pass the same class.</p>
+	 *
+	 * <p><b>This will only index static methods</b></p>
+	 *
+	 * @param clazz The class to index
+	 */
 	public static void register(Class clazz)
 	{
 		// We provide null as the subscriber instance because it is indexing static methods and therefore needs no instance to initialise

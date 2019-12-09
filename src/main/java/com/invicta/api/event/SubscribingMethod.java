@@ -20,7 +20,7 @@ class SubscribingMethod
 	
 	final Object instance;
 	final Method method;
-	boolean active = true;
+	boolean active = false;
 	
 	public void invoke(Object arg) throws InvocationTargetException, IllegalAccessException
 	{

@@ -36,7 +36,7 @@ public class CommandManager
 				(cmd, e) -> new RuntimeException(String.format("Failed to initialise command '%s'", cmd.getName()), e)
 			);
 		
-		EventDispatcher.register(this);
+		EventDispatcher.register(CommandManager.class);
 	}
 	
 	public static void execute(String command) throws CommandSyntaxException
