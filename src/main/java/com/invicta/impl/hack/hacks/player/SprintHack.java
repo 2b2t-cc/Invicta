@@ -10,13 +10,16 @@ import com.invicta.api.hack.HackCategory;
 @AbstractHack.Hack(name = "Sprint", description = "Makes you sprint!", category = HackCategory.COMBAT)
 public class SprintHack extends AbstractHack {
 	
+	
 	@Override
-	public void onEnable() {
-		Minecraft.getMinecraft().player.setSprinting() = true;
+	public void onUpdate() {
+		if(this.isEnabled()) {
+			Minecraft.getMinecraft().player.setSprinting() = true;
+		}
 	}
 	
 	@Override
 	public void onDisable() {
 		Minecraft.getMinecraft().player.setSprinting() = false;
-		
+	}
 }
