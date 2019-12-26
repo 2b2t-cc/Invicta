@@ -14,12 +14,18 @@ public class SprintHack extends AbstractHack {
 	@Override
 	public void onUpdate() {
 		if(this.isEnabled()) {
-			Minecraft.getMinecraft().player.setSprinting() = true;
+			if(Minecraft.getMinecraft.gameSettings.keyBindSprint.isKeyDown()) {
+				if(Minecraft.getMinecraft.player.collidedHorizontally = false;) {
+					Minecraft.getMinecraft().player.setSprinting(true);
+				}
+			}
+		} else {
+			Minecraft.getMinecraft().player.setSprinting(false)
 		}
 	}
 	
 	@Override
 	public void onDisable() {
-		Minecraft.getMinecraft().player.setSprinting() = false;
+		Minecraft.getMinecraft().player.setSprinting(false);
 	}
 }
