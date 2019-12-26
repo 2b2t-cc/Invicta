@@ -4,6 +4,7 @@ import com.invicta.api.util.keys.Key;
 import com.invicta.api.value.Value;
 import com.invicta.api.value.values.BooleanValue;
 import com.invicta.api.value.values.KeyValue;
+import net.minecraft.client.Minecraft;
 
 import javax.annotation.Nonnull;
 import java.lang.annotation.ElementType;
@@ -22,6 +23,8 @@ public abstract class AbstractHack
 	protected final HackCategory category;
 	private Value<Boolean> enabled = new BooleanValue("Enabled", false);
 	private Value<Key> keyBind = new KeyValue("Bind");
+
+	protected Minecraft mc = Minecraft.getMinecraft(); // move this to a wrapper class somewhere?
 	
 	public AbstractHack()
 	{
@@ -45,8 +48,15 @@ public abstract class AbstractHack
 	}
 	
 	protected void onEnabled(){}
+
 	protected void onDisabled(){}
-	
+
+	protected void onUpdated(){}
+
+	public boolean isEnabled() {
+		return enabled.getValue();
+	}
+
 	/**
 	 * @return A user friendly name for this hack
 	 */
@@ -82,4 +92,5 @@ public abstract class AbstractHack
 		@Nonnull String description();
 		@Nonnull HackCategory category();
 	}
+
 }
